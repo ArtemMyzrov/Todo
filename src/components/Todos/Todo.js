@@ -1,11 +1,11 @@
 import { BiTask } from 'react-icons/bi'
 import styles from './Todo.module.css'
 
-function Todo({ todo, index, deleteTodo }) {
+function Todo({ todo, deleteTodo }) {
   return (
-    <div onDoubleClick={() => deleteTodo(index)} className={styles.todo}>
+    <div onDoubleClick={() => deleteTodo(todo.id)} className={styles.todo}>
       <BiTask className={styles.todoIcon} />
-      <div>{todo}</div>
+      <div>{todo.text}</div>
     </div>
   )
 }
