@@ -14,7 +14,12 @@ function App() {
       isCompleted: false,
       id: uuidv4(),
     }
-    setTodos([...todos, newTodo])
+    const noneTodo = () => {
+      if (newTodo.text.length > 0) {
+        setTodos([...todos, newTodo])
+      }
+    }
+    noneTodo()
   }
   const deleteTodoHandler = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id))
@@ -37,19 +42,29 @@ function App() {
     setTodos(todos.filter((todo) => !todo.isCompleted))
   }
 
+  const completedTodosCount = todos.filter((todo) => todo.isCompleted).length
+
   return (
     <div className="App">
       <h1>Todo App</h1>
       <TodoForm addTodo={addTodoHandler} />
-      <TodosActions
-        deleteCompletedTodos={deleteCompletedTodos}
-        resetTodos={resetTodoHandler}
-      />
+      {!!todos.length && (
+        <TodosActions
+          completedTodosExist={!!completedTodosCount}
+          deleteCompletedTodos={deleteCompletedTodos}
+          resetTodos={resetTodoHandler}
+        />
+      )}
       <TodoList
         toggleTodo={toggleTodoHandler}
         deleteTodo={deleteTodoHandler}
         todos={todos}
       />
+      {completedTodosCount > 0 && (
+        <h4>{`You have  completed ${completedTodosCount} ${
+          completedTodosCount > 1 ? 'todos' : 'todo'
+        }`}</h4>
+      )}
     </div>
   )
 }
