@@ -1,11 +1,25 @@
 import { BiTask } from 'react-icons/bi'
+import { RiDeleteBin2Line } from 'react-icons/ri'
+import { FaCheck } from 'react-icons/fa'
 import styles from './Todo.module.css'
 
-function Todo({ todo, index, deleteTodo }) {
+function Todo({ todo, deleteTodo, toggleTodo }) {
   return (
-    <div onDoubleClick={() => deleteTodo(index)} className={styles.todo}>
+    <div
+      className={`${styles.todo} ${
+        todo.isCompleted ? styles.completedTodo : ''
+      }`}
+    >
       <BiTask className={styles.todoIcon} />
-      <div>{todo}</div>
+      <div className={styles.todoText}>{todo.text}</div>
+      <RiDeleteBin2Line
+        className={styles.deleteIcon}
+        onClick={() => deleteTodo(todo.id)}
+      />
+      <FaCheck
+        className={styles.checkIcon}
+        onClick={() => toggleTodo(todo.id)}
+      />
     </div>
   )
 }
